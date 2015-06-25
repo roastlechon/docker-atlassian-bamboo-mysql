@@ -21,12 +21,13 @@ RUN apt-get install -y wget git default-jre
 RUN sudo /bin/sh -c 'echo JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:/jre/bin/java::") >> /etc/environment'
 RUN sudo /bin/sh -c 'echo BAMBOO_HOME=${BAMBOO_HOME} >> /etc/environment'
 
-RUN mkdir -p ${BAMBOO_INSTALL_DIR}
+RUN mkdir -p /opt/atlassian
 RUN mkdir -p ${BAMBOO_HOME}
 
 RUN wget -P /tmp ${DOWNLOAD_URL}
 RUN tar zxf /tmp/atlassian-bamboo-5.7.2.tar.gz -C /tmp
-RUN mv /tmp/atlassian-bamboo-5.7.2/* ${BAMBOO_INSTALL_DIR}/
+RUN mv /tmp/atlassian-bamboo-5.7.2 /tmp/bamboo
+RUN mv /tmp/bamboo /opt/atlassian/
 
 RUN wget -P /tmp http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.34.tar.gz
 RUN tar zxf /tmp/mysql-connector-java-5.1.34.tar.gz -C /tmp
